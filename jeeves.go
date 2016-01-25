@@ -24,12 +24,11 @@ func main() {
 	for range ticker.C {
 		for {
 			line, err := reader.ReadString('\n')
+			if err == io.EOF {
+				break
+			}
 			if err != nil {
-				if err == io.EOF {
-					break
-				} else {
-					log.Fatal(err)
-				}
+				log.Fatal(err)
 			}
 			log.Println(line)
 		}
