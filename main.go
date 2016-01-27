@@ -5,14 +5,14 @@ import (
 	"log"
 	"time"
 
-	"github.com/jpemberthy/jeeves/watcher"
+	"github.com/jpemberthy/jeeves/jeeves"
 )
 
 const powerLog = "/Applications/Hearthstone/Logs/Power.log"
 
 func main() {
 	ch := make(chan string)
-	go watcher.Watch(powerLog, ch)
+	go jeeves.Watch(powerLog, ch)
 
 	for {
 		select {
