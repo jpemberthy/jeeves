@@ -1,19 +1,20 @@
-package main
+package watcher
 
 import (
 	"bufio"
 	"io"
-	"log"
 	"os"
 	"time"
 )
 
-const watchedLog = "/Applications/Hearthstone/Logs/Power.log"
+// Watch watches the file present on path and sends each line
+// to channel
+func Watch(path string, ch chan string) error {
+	defer close(ch)
 
-func main() {
-	file, err := os.Open(watchedLog)
+	file, err := os.Open(path)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 	defer file.Close()
 
@@ -28,9 +29,11 @@ func main() {
 				break
 			}
 			if err != nil {
-				log.Fatal(err)
+				return err
 			}
-			log.Println(line)
+			ch <- line
 		}
 	}
+
+	return nil
 }
