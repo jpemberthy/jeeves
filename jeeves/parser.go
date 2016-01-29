@@ -2,6 +2,7 @@ package jeeves
 
 import (
 	"errors"
+	"fmt"
 	"regexp"
 )
 
@@ -11,11 +12,16 @@ type Result struct {
 	Status string
 }
 
+// String implements the string interface.
+func (r Result) String() string {
+	return fmt.Sprintf("%s %s", r.Player, r.Status)
+}
+
 // ParseGameResult parses a string and detects a winner/loser.
 // If no result can be detected, an error is returned.
 func ParseGameResult(line string) (Result, error) {
 	result := Result{}
-	r, err := regexp.Compile("Entity=([^\t\n\f\r ]*).*value=(WON|LOST)")
+	r, err := regexp.Compile("GameState.*Entity=([^\t\n\f\r ]*).*value=(WON|LOST)")
 
 	if err != nil {
 		return result, err

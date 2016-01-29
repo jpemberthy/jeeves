@@ -1,8 +1,17 @@
 package jeeves
 
 import (
+	"fmt"
 	"testing"
 )
+
+func TestResultString(t *testing.T) {
+	result := Result{Player: "Uther", Status: "WON"}
+	expected := "Uther WON"
+	if fmt.Sprintf("%s", result) != expected {
+		t.Errorf("Expected result to be %s, got %s", expected, result)
+	}
+}
 
 func TestParseGameResult(t *testing.T) {
 	wonLine := "D 22:19:05.8451070 GameState.DebugPrintPower() - TAG_CHANGE Entity=jpemberthy tag=PLAYSTATE value=WON"
