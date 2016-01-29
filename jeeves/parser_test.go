@@ -14,8 +14,8 @@ func TestResultString(t *testing.T) {
 }
 
 func TestParseGameResult(t *testing.T) {
-	wonLine := "D 22:19:05.8451070 GameState.DebugPrintPower() - TAG_CHANGE Entity=jpemberthy tag=PLAYSTATE value=WON"
-	result, err := ParseGameResult(wonLine)
+	line := "D 22:19:05.8451070 GameState.DebugPrintPower() - TAG_CHANGE Entity=jpemberthy tag=PLAYSTATE value=WON"
+	result, err := ParseGameResult(line)
 	if err != nil {
 		t.Errorf("Expected error to be nil. got %s", err)
 	}
