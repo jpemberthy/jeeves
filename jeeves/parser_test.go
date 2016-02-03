@@ -3,28 +3,23 @@ package jeeves
 import (
 	"fmt"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestResultString(t *testing.T) {
 	result := Result{Player: "Uther", Status: "WON"}
 	expected := "Uther WON"
-	if fmt.Sprintf("%s", result) != expected {
-		t.Errorf("Expected result to be %s, got %s", expected, result)
-	}
+	assert.Equal(t, fmt.Sprintf("%s", result), expected)
 }
 
 func TestParseGameResult(t *testing.T) {
+	assert := assert.New(t)
 	line := "D 22:19:05.8451070 GameState.DebugPrintPower() - TAG_CHANGE Entity=jpemberthy tag=PLAYSTATE value=WON"
 	result, err := ParseGameResult(line)
-	if err != nil {
-		t.Errorf("Expected error to be nil. got %s", err)
-	}
+	require.Nil(t, err)
 
-	if result.Player != "jpemberthy" {
-		t.Errorf("Expected player name to be %s, got: %s", "jpemberthy", result.Player)
-	}
-
-	if result.Status != "WON" {
-		t.Errorf("Expected status to be %s, got: %s", "WON", result.Status)
-	}
+	assert.Equal(result.Player, "jpemberthy")
+	assert.Equal(result.Status, "WON")
 }
